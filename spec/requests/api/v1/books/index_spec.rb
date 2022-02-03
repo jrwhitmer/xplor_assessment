@@ -23,14 +23,14 @@ RSpec.describe "GET /api/v1/libraries/:id/books" do
 
     parsed = JSON.parse(response.body, symbolize_names: true)
 
-    expect(parsed).to be_an(Array)
-    expect(parsed.first[:library_id]).to eq(@library_1.id)
-    expect(parsed.first[:id]).to eq(@book_1.id)
-    expect(parsed.first[:author]).to eq(@book_1.author)
-    expect(parsed.first[:title]).to eq(@book_1.title)
-    expect(parsed.first[:status]).to eq(@book_1.status)
-    expect(parsed.first[:current_user]).to eq(@book_1.current_user)
-    expect(parsed[1][:title]).to eq(@book_2.title)
+    expect(parsed[:data]).to be_an(Array)
+    expect(parsed[:data].first[:attributes][:library_id]).to eq(@library_1.id)
+    expect(parsed[:data].first[:id]).to eq("#{@book_1.id}")
+    expect(parsed[:data].first[:attributes][:author]).to eq(@book_1.author)
+    expect(parsed[:data].first[:attributes][:title]).to eq(@book_1.title)
+    expect(parsed[:data].first[:attributes][:status]).to eq(@book_1.status)
+    expect(parsed[:data].first[:attributes][:current_user]).to eq(@book_1.current_user)
+    expect(parsed[:data][1][:attributes][:title]).to eq(@book_2.title)
 
   end
 
@@ -39,10 +39,10 @@ RSpec.describe "GET /api/v1/libraries/:id/books" do
 
     parsed = JSON.parse(response.body, symbolize_names: true)
 
-    expect(parsed.length).to eq(3)
-    expect(parsed[0][:title]).to eq(@book_1.title)
-    expect(parsed[1][:title]).to eq(@book_2.title)
-    expect(parsed[-1][:title]).to eq(@book_3.title)
+    expect(parsed[:data].length).to eq(3)
+    expect(parsed[:data][0][:attributes][:title]).to eq(@book_1.title)
+    expect(parsed[:data][1][:attributes][:title]).to eq(@book_2.title)
+    expect(parsed[:data][-1][:attributes][:title]).to eq(@book_3.title)
   end
 
   it 'has optional params for status and will return only the checked in books when status=checkedin' do
@@ -50,8 +50,8 @@ RSpec.describe "GET /api/v1/libraries/:id/books" do
 
     parsed = JSON.parse(response.body, symbolize_names: true)
 
-    expect(parsed.length).to eq(1)
-    expect(parsed.first[:title]).to eq(@book_1.title)
+    expect(parsed[:data].length).to eq(1)
+    expect(parsed[:data].first[:attributes][:title]).to eq(@book_1.title)
   end
 
   it 'will return only the checked out books when status=checkedout' do
@@ -59,9 +59,9 @@ RSpec.describe "GET /api/v1/libraries/:id/books" do
 
     parsed = JSON.parse(response.body, symbolize_names: true)
 
-    expect(parsed.length).to eq(2)
-    expect(parsed.first[:title]).to eq(@book_2.title)
-    expect(parsed.last[:title]).to eq(@book_3.title)
+    expect(parsed[:data].length).to eq(2)
+    expect(parsed[:data].first[:attributes][:title]).to eq(@book_2.title)
+    expect(parsed[:data].last[:attributes][:title]).to eq(@book_3.title)
   end
 
   it 'renders a bad request with 400 status if optional params are incorrectly input for status' do
@@ -77,8 +77,8 @@ RSpec.describe "GET /api/v1/libraries/:id/books" do
 
     parsed = JSON.parse(response.body, symbolize_names: true)
 
-    expect(parsed.length).to eq(1)
-    expect(parsed.first[:title]).to eq(@book_3.title)
+    expect(parsed[:data].length).to eq(1)
+    expect(parsed[:data].first[:attributes][:title]).to eq(@book_3.title)
   end
 
   it 'returns a 400 status and error message if the user in optional param does not have any matching books' do

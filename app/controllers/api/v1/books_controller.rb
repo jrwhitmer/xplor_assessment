@@ -4,10 +4,10 @@ class Api::V1::BooksController < ApplicationController
     if params[:status].present?
       if params[:status] == "available"
         books = library.available
-        render json: books, each_serializer: BookSerializer, status: :ok
+        render json: BookSerializer.new(books), status: :ok
       elsif params[:status] == "checkedout"
         books = library.checked_out
-        render json: books, each_serializer: BookSerializer, status: :ok
+        render json: BookSerializer.new(books), status: :ok
       else
         render_bad_request("Incorrect search parameters. Try available or checkedout for status.")
       end
@@ -16,11 +16,11 @@ class Api::V1::BooksController < ApplicationController
       if books.empty?
         render_bad_request("This user has not checked out any books from this library.")
       else
-        render json: books, each_serializer: BookSerializer, status: :ok
+        render json: BookSerializer.new(books), status: :ok
       end
     else
       books = library.books_asc
-      render json: books, each_serializer: BookSerializer, status: :ok
+      render json: BookSerializer.new(books), status: :ok
     end
   end
 end

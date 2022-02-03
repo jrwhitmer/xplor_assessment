@@ -76,36 +76,40 @@ Design a single JSON API endpoint that returns basic information about what book
  - returns the following body:
  ```
    {
+     data:
     [
       {
         "id": "id",
-        "library_id": "library_id",
-        "author": "author",
-        "title": "title",
-        "status": "status"
-        "current_user": "user"
-        "created_at": "timestamp"
-        "updated_at": "timestamp"
+        "type": "book"
+        "attributes:" {
+          "library_id": "library_id",
+          "author": "author",
+          "title": "title",
+          "status": "status"
+          "current_user": "user"
+        }
       },
       {
         "id": "id",
-        "library_id": "library_id",
-        "author": "author",
-        "title": "title",
-        "status": "status"
-        "current_user": "user"
-        "created_at": "timestamp"
-        "updated_at": "timestamp"
+        "type": "book"
+        "attributes:" {
+          "library_id": "library_id",
+          "author": "author",
+          "title": "title",
+          "status": "status"
+          "current_user": "user"
+        }
       },
       {
         "id": "id",
-        "library_id": "library_id",
-        "author": "author",
-        "title": "title",
-        "status": "status"
-        "current_user": "user"
-        "created_at": "timestamp"
-        "updated_at": "timestamp"
+        "type": "book"
+        "attributes:" {
+          "library_id": "library_id",
+          "author": "author",
+          "title": "title",
+          "status": "status"
+          "current_user": "user"
+        }
       }...
     ]
   }
